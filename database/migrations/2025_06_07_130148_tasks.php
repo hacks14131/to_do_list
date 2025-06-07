@@ -11,7 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        //
+        Schema::craete('tasks', function(Blueprint $table) {
+            $table->id();
+            $table->string('taskOwner');
+            $table->string('title');
+            $table->string('description');
+            $table->string('status');
+            $table->string('deadlineDate');
+            $table->string('dateCompleted');
+            $table->string('priority');
+            $table->timestamps();
+        });
     }
 
     /**
