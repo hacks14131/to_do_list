@@ -1,31 +1,35 @@
 <script setup>
-    import { Link } from '@inertiajs/vue3'
+    import { Link, Head } from '@inertiajs/vue3'
     import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
     import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 
     const user = {
-        name: 'John Doe',
         avatar: 'images/cat avatar.jpg',
     };
 
 </script>
 <template>
+    <Head>
+        <title>
+            To Do List
+        </title>
+    </Head>
     <div class="min-h-screen flex flex-col bg-[#D1D8BE]">
         <header class="bg-[#A7C1A8] text-white">
             <nav class="flex items-center justify-between p-4 max-w-screen-lg mx-auto">
                 <div class="space-x-6">
-                    <Link href="/">Home</Link>
-                    <Link href="/priority">Priority</Link>
-                    <Link href="/completed">Completed</Link>
+                    <Link :href="route('all-tasks')">Home</Link>
+                    <Link :href="route('prioritized-tasks')">Priority</Link>
+                    <Link :href="route('completed-tasks')">Completed</Link>
                 </div>
                 <div class="relative flex items-center gap-3 cursor-pointer" @click="toggleDropdown">
                     <img 
-                        :src="user.avatar"
+                        :src="$page.props.auth.avatar"
                         alt="avatar"
                         class="w-10 h-10 rounded-full border-2 border-white object-cover"
                     />
                     <span>
-                        {{ user.name }}
+                        {{ $page.props.auth.user }}
                     </span>
                     <Menu as="div" class="relative inline-block text-left bg-[#A7C1A8]">
                         <div>

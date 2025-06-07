@@ -51,6 +51,7 @@ const tasks = [
 ];
 </script>
 <template>
+    <Head title="Priority Tasks" />
     <div>
         <div class="p-6 min-h-screen">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

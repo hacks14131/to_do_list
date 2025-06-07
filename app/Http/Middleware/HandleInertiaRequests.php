@@ -37,7 +37,8 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            //
+            'auth.user' => 'Jon Doe',
+            'auth.avatar' => 'images/cat avatar.jpg',
         ];
     }
 }

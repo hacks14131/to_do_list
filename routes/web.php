@@ -3,12 +3,11 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    return Inertia::render('Home');
-});
-Route::get('/priority', function() { 
-    return Inertia::render('Priority');
- });
-Route::get('/completed', function() { 
-    return Inertia::render('Completed');
- });
+// Route::get('/', function () {
+//     sleep(2)
+//     return Inertia::render('Home');
+// });
+
+ Route::inertia('/', 'Home')->name('all-tasks');
+ Route::inertia('/priority', 'Priority')->name('prioritized-tasks');
+ Route::inertia('/completed', 'Completed')->name('completed-tasks');

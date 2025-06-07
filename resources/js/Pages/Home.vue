@@ -61,6 +61,7 @@ const tasks = [
 ];
 </script>
 <template>
+    <Head title="Home" />
     <div class="m-2 bg-[#D1D8BE]">
         <div class="flex justify-end p-4">
             <button 
