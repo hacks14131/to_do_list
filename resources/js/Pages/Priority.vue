@@ -1,14 +1,4 @@
 <script setup>
-import { ref } from 'vue'
-import AddTasksModal from './AddTasksModal.vue';
-
-const showModal = ref(false)
-
-function handleNewTask(taskData) {
-  console.log('New Task:', taskData)
-  // You can now push it into your task array or send it to an API
-}
-
 const tasks = [
     {
         id: 1,
@@ -61,30 +51,16 @@ const tasks = [
 ];
 </script>
 <template>
-    <div class="m-2 bg-[#D1D8BE]">
-        <div class="flex justify-end p-4">
-            <button 
-                @click="showModal = true"
-                class="bg-[#819A91] p-2 font-inter rounded text-white hover:bg-blue-600">
-                NEW TASK
-            </button>
-            <AddTasksModal v-model="showModal" @submit="handleNewTask" />
-        </div>
-        <div class="p-6 min-h-screen border-t-1 border-[#819A91]">
-            <!-- Card grid: 3 cards per row -->
+    <div>
+        <div class="p-6 min-h-screen">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
                 <div v-for="task in tasks" :key="task.id" class="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                    <!-- Centered task title -->
                     <h2 class="text-lg font-bold text-center mb-2">
                         {{ task.title }}
                     </h2>
-
-                    <!-- Description -->
                     <p class="text-sm text-gray-700 mb-4 text-center">
                         {{ task.description }}
                     </p>
-
-                    <!-- Metadata -->
                     <div class="text-xs text-gray-600 mt-auto">
                         <p><strong>Status:</strong> {{ task.status }}</p>
                         <p><strong>Deadline:</strong> {{ task.deadline }}</p>

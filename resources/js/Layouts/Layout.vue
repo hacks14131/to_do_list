@@ -15,8 +15,8 @@
             <nav class="flex items-center justify-between p-4 max-w-screen-lg mx-auto">
                 <div class="space-x-6">
                     <Link href="/">Home</Link>
-                    <Link href="/">Priority</Link>
-                    <Link href="/">Completed</Link>
+                    <Link href="/priority">Priority</Link>
+                    <Link href="/completed">Completed</Link>
                 </div>
                 <div class="relative flex items-center gap-3 cursor-pointer" @click="toggleDropdown">
                     <img 
@@ -27,24 +27,23 @@
                     <span>
                         {{ user.name }}
                     </span>
-                    <Menu as="div" class="relative inline-block text-left">
+                    <Menu as="div" class="relative inline-block text-left bg-[#A7C1A8]">
                         <div>
-                        <MenuButton class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-xs ring-1 ring-gray-300 ring-inset hover:bg-gray-50">
-                            Options
-                            <ChevronDownIcon class="-mr-1 size-5 text-gray-400" aria-hidden="true" />
-                        </MenuButton>
+                            <MenuButton class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-[#A7C1A8] px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-[#A7C1A8] ring-inset hover:bg-[#A7C1A8]">
+                                <ChevronDownIcon class="-mr-1 size-5 text-[#EEEFE0]" aria-hidden="true" />
+                            </MenuButton>
                         </div>
 
                         <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-                        <MenuItems class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden">
-                            <div class="py-1">
-                            <form method="POST" action="#">
-                                <MenuItem v-slot="{ active }">
-                                <button type="submit" :class="[active ? 'bg-gray-100 text-gray-900 outline-hidden' : 'text-gray-700', 'block w-full px-4 py-2 text-left text-sm']">Sign out</button>
-                                </MenuItem>
-                            </form>
-                            </div>
-                        </MenuItems>
+                            <MenuItems class="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 focus:outline-hidden">
+                                <div class="py-1">
+                                <form method="POST" action="#">
+                                    <MenuItem v-slot="{ active }">
+                                    <button type="submit" :class="[active ? 'bg-gray-100 text-gray-900 outline-hidden' : 'text-gray-700', 'block w-full px-4 py-2 text-left text-sm']">Sign out</button>
+                                    </MenuItem>
+                                </form>
+                                </div>
+                            </MenuItems>
                         </transition>
                     </Menu>
                 </div>  
