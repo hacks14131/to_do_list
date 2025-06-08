@@ -72,30 +72,24 @@ const tasks = [
             <AddTasksModal v-model="showModal" @submit="handleNewTask" />
         </div>
         <div class="p-6 min-h-screen border-t-1 border-[#819A91]">
-            <!-- Card grid: 3 cards per row -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                <div v-for="task in tasks" :key="task.id" class="bg-white rounded-lg shadow-md p-4 flex flex-col">
-                    <!-- Centered task title -->
+                <div v-for="task in tasks" :key="task.id" class="bg-[#A7C1A8] text-[#EEEFE0] rounded-lg shadow-md p-4 flex flex-col">
                     <h2 class="text-lg font-bold text-center mb-2">
                         {{ task.title }}
                     </h2>
-
-                    <!-- Description -->
                     <p class="text-sm text-gray-700 mb-4 text-center">
                         {{ task.description }}
                     </p>
-
-                    <!-- Metadata -->
-                    <div class="text-xs text-gray-600 mt-auto">
+                    <div class="text-xs text-gray-600 mt-auto border-b-1 border-[#819A91]">
                         <p><strong>Status:</strong> {{ task.status }}</p>
                         <p><strong>Deadline:</strong> {{ task.deadline }}</p>
                         <p><strong>Created:</strong> {{ task.created }}</p>
                     </div>
-                    <div class="flex justify-end space-x-2 mb-4 border-t-1 border-[#819A91] m-1 p-1">
-                        <button class="text-xs bg-orange-500 text-white px-2 py-1 rounded">⭐ Priority</button>
-                        <button class="text-xs bg-blue-500 text-white px-2 py-1 rounded">✏ Edit</button>
-                        <button class="text-xs bg-green-500 text-white px-2 py-1 rounded">✔ Done</button>
-                        <button class="text-xs bg-red-500 text-white px-2 py-1 rounded">🗑 Delete</button>
+                    <div class="flex justify-center space-x-2 mb-4 m-2 p-1">
+                        <button class="text-xs bg-orange-400 text-white px-2 py-1 rounded">⭐ Priority</button>
+                        <button class="text-xs bg-blue-400 text-white px-2 py-1 rounded">✏ Edit</button>
+                        <button class="text-xs bg-green-400 text-white px-2 py-1 rounded">✔ Done</button>
+                        <button class="text-xs bg-red-400 text-white px-2 py-1 rounded">🗑 Delete</button>
                     </div>
                 </div>
             </div>

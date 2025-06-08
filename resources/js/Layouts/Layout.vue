@@ -15,25 +15,29 @@
         </title>
     </Head>
     <div class="min-h-screen flex flex-col bg-[#D1D8BE]">
-        <header class="bg-[#A7C1A8] text-white">
-            <nav class="flex items-center justify-between p-4 max-w-screen-lg mx-auto">
-                <div class="space-x-6">
+        <header class="bg-[#819A91] text-white">
+            <nav class="flex w-full px-8 p-4">
+                <div class="w-1/2 text-left flex items-center space-x-4 p-4 text-lg font-medium text-[#EEEFE0]">
                     <Link :href="route('all-tasks')">Home</Link>
+                    <span>|</span>
                     <Link :href="route('prioritized-tasks')">Priority</Link>
+                    <span>|</span>
                     <Link :href="route('completed-tasks')">Completed</Link>
+                    <span>|</span>
+                    <Link :href="route('register_user')">Register (Admin)</Link>
                 </div>
-                <div class="relative flex items-center gap-3 cursor-pointer" @click="toggleDropdown">
+                <div class="w-1/2 flex justify-end items-center gap-4 text-lg text-[#EEEFE0]" @click="toggleDropdown">
                     <img 
                         :src="$page.props.auth.avatar"
                         alt="avatar"
-                        class="w-10 h-10 rounded-full border-2 border-white object-cover"
+                        class="w-10 h-10 rounded-full border-2 border-[#EEEFE0] object-cover"
                     />
                     <span>
                         {{ $page.props.auth.user }}
                     </span>
-                    <Menu as="div" class="relative inline-block text-left bg-[#A7C1A8]">
+                    <Menu as="div" class="relative inline-block text-left bg-[#819A91]">
                         <div>
-                            <MenuButton class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-[#A7C1A8] px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-[#A7C1A8] ring-inset hover:bg-[#A7C1A8]">
+                            <MenuButton class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-[#819A91] px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-[#819A91] ring-inset hover:bg-[#A7C1A8]">
                                 <ChevronDownIcon class="-mr-1 size-5 text-[#EEEFE0]" aria-hidden="true" />
                             </MenuButton>
                         </div>
