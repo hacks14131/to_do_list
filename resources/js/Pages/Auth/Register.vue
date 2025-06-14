@@ -1,39 +1,3 @@
-<script setup>
-import { ref } from "vue";
-import { useForm } from '@inertiajs/vue3';
-import InputField from '../Components/InputField.vue';
-
-const form = useForm({
-    username: null,
-    password: null,
-    password_confirmation: null,
-    firstName: null,
-    middleName: null,
-    familyName: null,
-    role: 'user',
-    imageFile: null,
-    imageURL: null,
-});
-
-function handleImageChange(event) {
-    const file = event.target.files[0];
-    if (file) {
-        form.imageFile = file;
-        form.imageUrl = URL.createObjectURL(file);
-    }
-}
-
-function triggerFileInput() {
-    document.getElementById("image").click();
-}
-
-
-
-const submit = () => {
-    form.post('/register')
-}
-
-</script>
 <template>
 
     <Head title="Register" />
@@ -65,7 +29,7 @@ const submit = () => {
                 id="username"
                 name="username"
                 type="text"
-                autocomplete="true"
+                autocomplete="on"
                 v-model="form.username"
                 :error="form.errors.username"
             />
@@ -94,7 +58,7 @@ const submit = () => {
                 id="firstName"
                 name="firstName"
                 type="text"
-                autocomplete="true"
+                autocomplete="on"
                 v-model="form.firstName"
                 :error="form.errors.firstName"
             />
@@ -104,7 +68,7 @@ const submit = () => {
                 id="middleName"
                 name="middleName"
                 type="text"
-                autocomplete="true"
+                autocomplete="on"
                 v-model="form.middleName"
                 :error="form.errors.middleName"
             />
@@ -114,7 +78,7 @@ const submit = () => {
                 id="familyName"
                 name="familyName"
                 type="text"
-                autocomplete="true"
+                autocomplete="on"
                 v-model="form.familyName"
                 :error="form.errors.familyName"
             />
@@ -143,3 +107,38 @@ const submit = () => {
         </form>
     </div>
 </template>
+<script setup>
+import { useForm } from '@inertiajs/vue3';
+import InputField from '../Components/InputField.vue';
+
+const form = useForm({
+    username: null,
+    password: null,
+    password_confirmation: null,
+    firstName: null,
+    middleName: null,
+    familyName: null,
+    role: 'user',
+    avatar: null,
+    imageURL: null,
+});
+
+function handleImageChange(event) {
+    const file = event.target.files[0];
+    if (file) {
+        form.avatar = file;
+        form.imageUrl = URL.createObjectURL(file);
+    }
+}
+
+function triggerFileInput() {
+    document.getElementById("image").click();
+}
+
+const submit = () => {
+    form.post('/register', {
+        onError: () => form.reset('password', 'password_confirmation')
+    })
+}
+
+</script>

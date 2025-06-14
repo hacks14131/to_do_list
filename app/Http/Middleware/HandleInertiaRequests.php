@@ -37,8 +37,10 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'auth.user' => 'Jon Doe',
-            'auth.avatar' => 'images/cat avatar.jpg',
+            'auth.user' => auth()->check() ? auth()->user()->username : null,
+            'auth.avatar' => auth()->check() ? auth()->user()->avatar : null,
+            'csrf_token' => csrf_token(),
+
         ];
     }
 }

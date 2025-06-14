@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::craete('tasks', function(Blueprint $table) {
+        Schema::create('tasks', function(Blueprint $table) {
             $table->id();
-            $table->string('taskOwner');
+            $table->unsignedBigInteger('taskOwner');
             $table->string('title');
             $table->string('description');
             $table->string('status');
@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('dateCompleted');
             $table->string('priority');
             $table->timestamps();
+
+            $table->foreign('taskOwner')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
