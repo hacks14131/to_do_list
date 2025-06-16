@@ -10,6 +10,20 @@ use Inertia\Inertia;
 
 class TaskController extends Controller                                                                                                                                             
 {
+    public function markAsDone(Request $request) {
+        try {
+            $request->validate([
+                'id' => 'required|exists:tasks,id',
+            ]);
+
+            Task::where('id', $request->id)->update(['status' => 'Completed']);
+
+            return redirect()->back()->with('success', 'Task marked as done successfully.');
+        } catch (\Throwable $th) {
+            Log::error("Error in creating new tasks", ["error" => $th->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Failed to update task.'])->withInput();
+        }
+    }
     public function prioritizeTask(Request $request) {
         try {
             $request->validate([
@@ -26,7 +40,7 @@ class TaskController extends Controller
     }
     public function index(Request $request) {
         $userID = Auth::user()->id;
-        $tasks = Task::where('taskOwner', $userID)->get();
+        $tasks = Task::where("taskOwner", $userID)->where("status", "!=", "completed")->get();
         // dump($tasks->toArray());
         return Inertia::render('Home', [
             'tasks' => $tasks
