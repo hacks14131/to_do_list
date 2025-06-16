@@ -26,7 +26,7 @@
                         <p><strong>Created:</strong> {{ dayjs(task.created_at).format('MMMM D, YYYY') }}</p>
                     </div>
                     <div class="flex justify-center space-x-2 mb-4 m-2 p-1">
-                        <button class="text-xs bg-orange-400 text-white px-2 py-1 rounded"><Link :href="route('all-tasks')">⭐ Priority</Link></button>
+                        <button class="text-xs bg-orange-400 text-white px-2 py-1 rounded" @click="taskPrioritize(task)">⭐ Priority</button>
                         <button class="text-xs bg-blue-400 text-white px-2 py-1 rounded">✏ Edit</button>
                         <button class="text-xs bg-green-400 text-white px-2 py-1 rounded">✔ Done</button>
                         <button class="text-xs bg-red-400 text-white px-2 py-1 rounded">🗑 Delete</button>
@@ -40,9 +40,14 @@
 import { ref } from 'vue';
 import dayjs from 'dayjs';
 import AddTasksModal from './Components/AddTasksModal.vue';
+import { router } from '@inertiajs/vue3';
 
 const showModal = ref(false)
 defineProps({
     tasks: Object,
 });
+
+const taskPrioritize = (task) => {
+    router.post('/prioritize-task', { id: task.id });
+}
 </script>

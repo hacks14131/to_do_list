@@ -7,6 +7,7 @@ use App\Http\Controllers\TaskController;
 Route::middleware('auth')->group(function() {
     Route::get('/', [TaskController::class, 'index'])->name('all-tasks');
     Route::post('/add-new-tasks', [TaskController::class, 'addNewTask']);
+    Route::post('/prioritize-task', [TaskController::class, 'prioritizeTask']);
     Route::inertia('/priority', 'Priority')->name('prioritized-tasks');
     Route::inertia('/completed', 'Completed')->name('completed-tasks');
 
