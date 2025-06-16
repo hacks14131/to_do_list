@@ -44,7 +44,8 @@
                         </button>
 
                         <button
-                            class="text-xs bg-red-400 hover:bg-red-500 text-white w-24 h-7 rounded transition-colors duration-200">
+                            class="text-xs bg-red-400 hover:bg-red-500 text-white w-24 h-7 rounded transition-colors duration-200"
+                            @click="deleteTask(task)">
                             🗑 Delete
                         </button>
                     </div>
@@ -66,10 +67,14 @@ defineProps({
 });
 
 const taskPrioritize = (task) => {
-    router.post('/prioritize-task', { id: task.id });
+    router.patch(route('tasks.prioritize', task.id));
 }
 
 const markAsDone = (task) => {
-    router.post('/task-complete', { id: task.id });
+    router.patch(route('tasks.complete', task.id));
+}
+
+const deleteTask = (task) => {
+    router.delete(route('tasks.destroy', task.id));
 }
 </script>

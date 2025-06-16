@@ -10,13 +10,20 @@ use Inertia\Inertia;
 
 class TaskController extends Controller                                                                                                                                             
 {
-    public function markAsDone(Request $request) {
+    public function removeTask(Task $task) {
         try {
-            $request->validate([
-                'id' => 'required|exists:tasks,id',
-            ]);
+            $task->delete();
 
-            Task::where('id', $request->id)->update(['status' => 'Completed']);
+            return redirect()->back()->with('success', 'Task deleted successfully.');
+        } catch (\Throwable $th) {
+            Log::error("Error deleting tasks", ["error" => $th->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Failed to delete task.'])->withInput();
+        }
+    }
+    public function markAsDone(Task $task) {
+        try {
+            $task->status = 'Completed';
+            $task->save();
 
             return redirect()->back()->with('success', 'Task marked as done successfully.');
         } catch (\Throwable $th) {
@@ -24,17 +31,14 @@ class TaskController extends Controller
             return redirect()->back()->withErrors(['error' => 'Failed to update task.'])->withInput();
         }
     }
-    public function prioritizeTask(Request $request) {
+    public function prioritizeTask(Task $task) {
         try {
-            $request->validate([
-                'id' => 'required|exists:tasks,id',
-            ]);
-
-            Task::where('id', $request->id)->update(['priority' => true]);
+            $task->priority = true;
+            $task->save();
 
             return redirect()->back()->with('success', 'Task prioritized successfully.');
         } catch (\Throwable $th) {
-            Log::error("Error in creating new tasks", ["error" => $th->getMessage()]);
+            Log::error("Error in prioritizing new tasks", ["error" => $th->getMessage()]);
             return redirect()->back()->withErrors(['error' => 'Failed to update task.'])->withInput();
         }
     }

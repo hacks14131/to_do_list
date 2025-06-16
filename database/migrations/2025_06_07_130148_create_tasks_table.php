@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('status');
             $table->string('deadlineDate');
             $table->string('dateCompleted')->nullable();
-            $table->string('priority');
+            $table->boolean('priority');
             $table->timestamps();
 
             $table->foreign('taskOwner')->references('id')->on('users')->onDelete('cascade');
