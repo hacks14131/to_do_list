@@ -6,9 +6,18 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
-class TaskController extends Controller
+class TaskController extends Controller                                                                                                                                             
 {
+    public function index(Request $request) {
+        $userID = Auth::user()->id;
+        $tasks = Task::where('taskOwner', $userID)->get();
+        // dump($tasks->toArray());
+        return Inertia::render('Home', [
+            'tasks' => $tasks
+        ]);
+    }
     public function addNewTask(Request $request) {
         try {
             $fields = $request->validate([

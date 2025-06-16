@@ -1,60 +1,3 @@
-<script setup>
-import { ref } from 'vue'
-import AddTasksModal from './Components/AddTasksModal.vue';
-
-const showModal = ref(false)
-
-const tasks = [
-    {
-        id: 1,
-        title: 'Buy groceries',
-        description: 'Milk, Bread, Eggs, Fruits',
-        status: 'Pending',
-        deadline: '2025-06-10',
-        created: '2025-06-07',
-    },
-    {
-        id: 2,
-        title: 'Finish Vue component',
-        description: 'Render tasks dynamically',
-        status: 'In Progress',
-        deadline: '2025-06-09',
-        created: '2025-06-06',
-    },
-    {
-        id: 3,
-        title: 'Call supplier',
-        description: 'Follow up on delivery issues',
-        status: 'Completed',
-        deadline: '2025-06-08',
-        created: '2025-06-04',
-    },
-    {
-        id: 4,
-        title: 'Write report',
-        description: 'Draft weekly performance summary',
-        status: 'Pending',
-        deadline: '2025-06-12',
-        created: '2025-06-07',
-    },
-    {
-        id: 5,
-        title: 'Clean workspace',
-        description: 'Organize files and clean desk',
-        status: 'In Progress',
-        deadline: '2025-06-11',
-        created: '2025-06-06',
-    },
-    {
-        id: 6,
-        title: 'Pay bills',
-        description: 'Electricity and internet bills',
-        status: 'Pending',
-        deadline: '2025-06-10',
-        created: '2025-06-05',
-    },
-];
-</script>
 <template>
     <Head title="Home" />
     <div class="m-2 bg-[#D1D8BE]">
@@ -79,11 +22,11 @@ const tasks = [
                     </p>
                     <div class="text-xs text-gray-600 mt-auto border-b-1 border-[#819A91]">
                         <p><strong>Status:</strong> {{ task.status }}</p>
-                        <p><strong>Deadline:</strong> {{ task.deadline }}</p>
-                        <p><strong>Created:</strong> {{ task.created }}</p>
+                        <p><strong>Deadline:</strong> {{ dayjs(task.deadlineDate).format('MMMM D, YYYY') }}</p>
+                        <p><strong>Created:</strong> {{ dayjs(task.created_at).format('MMMM D, YYYY') }}</p>
                     </div>
                     <div class="flex justify-center space-x-2 mb-4 m-2 p-1">
-                        <button class="text-xs bg-orange-400 text-white px-2 py-1 rounded">⭐ Priority</button>
+                        <button class="text-xs bg-orange-400 text-white px-2 py-1 rounded"><Link :href="route('all-tasks')">⭐ Priority</Link></button>
                         <button class="text-xs bg-blue-400 text-white px-2 py-1 rounded">✏ Edit</button>
                         <button class="text-xs bg-green-400 text-white px-2 py-1 rounded">✔ Done</button>
                         <button class="text-xs bg-red-400 text-white px-2 py-1 rounded">🗑 Delete</button>
@@ -93,3 +36,13 @@ const tasks = [
         </div>
     </div>
 </template>
+<script setup>
+import { ref } from 'vue';
+import dayjs from 'dayjs';
+import AddTasksModal from './Components/AddTasksModal.vue';
+
+const showModal = ref(false)
+defineProps({
+    tasks: Object,
+});
+</script>
