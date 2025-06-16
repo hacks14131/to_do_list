@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('description');
             $table->string('status');
             $table->string('deadlineDate');
-            $table->string('dateCompleted');
+            $table->string('dateCompleted')->nullable();
             $table->string('priority');
             $table->timestamps();
 

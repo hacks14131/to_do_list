@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Illuminate\Http\Request;
 use Inertia\Middleware;
+use Illuminate\Support\Facades\Auth;
 
 class HandleInertiaRequests extends Middleware
 {
@@ -37,10 +38,11 @@ class HandleInertiaRequests extends Middleware
     {
         return [
             ...parent::share($request),
-            'auth.user' => auth()->check() ? auth()->user()->username : null,
             'auth.avatar' => auth()->check() ? auth()->user()->avatar : null,
             'csrf_token' => csrf_token(),
-
+            'auth' => [
+                'user' => fn () => Auth::user()?->only('id', 'firstName', 'role', 'avatar'),
+            ],
         ];
     }
 }

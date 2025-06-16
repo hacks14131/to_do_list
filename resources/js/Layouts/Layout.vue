@@ -13,8 +13,8 @@
                     <Link :href="route('prioritized-tasks')">Priority</Link>
                     <span>|</span>
                     <Link :href="route('completed-tasks')">Completed</Link>
-                    <span>|</span>
-                    <Link :href="route('register')">Register (Admin)</Link>
+                    <span v-if="auth.user?.role === 'admin'">|</span>
+                    <Link v-if="auth.user?.role === 'admin'" :href="route('register')">Register (Admin)</Link>
                 </div>
                 <div
                     class="w-1/2 flex justify-end items-center gap-4 text-lg text-[#EEEFE0]"
@@ -22,8 +22,8 @@
                 >
                     <img
                         :src="
-                            $page.props.auth.avatar
-                                ? `/storage/${$page.props.auth.avatar}`
+                            auth.user.avatar
+                                ? `/storage/${auth.user.avatar}`
                                 : '/images/cat%20avatar.jpg'
                         "
                         alt="avatar"
@@ -38,7 +38,7 @@
                                 class="inline-flex w-full justify-center gap-x-1.5 rounded-md bg-[#819A91] px-3 py-2 text-sm font-semibold text-gray-900 ring-1 ring-[#819A91] ring-inset hover:bg-[#A7C1A8]"
                             >
                                 <span class="text-[#EEEFE0]">
-                                    {{ $page.props.auth.user }}
+                                    {{ auth.user.firstName }}
                                 </span>
                                 <ChevronDownIcon
                                     class="-mr-1 size-5 text-[#EEEFE0]"
@@ -101,6 +101,7 @@ import { ChevronDownIcon } from "@heroicons/vue/20/solid";
 
 const { csrf_token } = usePage().props;
 const csrfToken = csrf_token;
+const { auth } = usePage().props;
 
 const user = {
     avatar: "images/cat avatar.jpg",

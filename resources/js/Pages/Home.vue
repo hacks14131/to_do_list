@@ -1,13 +1,8 @@
 <script setup>
 import { ref } from 'vue'
-import AddTasksModal from './AddTasksModal.vue';
+import AddTasksModal from './Components/AddTasksModal.vue';
 
 const showModal = ref(false)
-
-function handleNewTask(taskData) {
-  console.log('New Task:', taskData)
-  // You can now push it into your task array or send it to an API
-}
 
 const tasks = [
     {
@@ -71,7 +66,7 @@ const tasks = [
                     NEW TASK
                 </span>
             </button>
-            <AddTasksModal v-model="showModal" @submit="handleNewTask" />
+            <AddTasksModal v-model="showModal" />
         </div>
         <div class="p-6 min-h-screen border-t-1 border-[#819A91]">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">

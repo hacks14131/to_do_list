@@ -2,9 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TaskController;
 
 Route::middleware('auth')->group(function() {
     Route::inertia('/', 'Home')->name('all-tasks');
+    Route::post('/add-new-tasks', [TaskController::class, 'addNewTask']);
     Route::inertia('/priority', 'Priority')->name('prioritized-tasks');
     Route::inertia('/completed', 'Completed')->name('completed-tasks');
 
