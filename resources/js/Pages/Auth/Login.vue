@@ -1,10 +1,7 @@
 <template>
     <Head title="Login" />
-
-    
     <div class="w-2/4 mx-auto bg-[#EEEFE0] p-8 rounded shadow mt-48">
         <h1 class="text-center text-2xl font-bold text-[#819A91] my-6">
-            To Do List
         </h1>
     
         <form @submit.prevent="submit" autocomplete="off">
@@ -46,7 +43,7 @@
     defineOptions({
         layout: Login
     })
-
+    
     const form = useForm({
         username: null,
         password: null,

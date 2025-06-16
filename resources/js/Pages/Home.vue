@@ -66,8 +66,10 @@ const tasks = [
         <div class="flex justify-end p-4">
             <button 
                 @click="showModal = true"
-                class="bg-[#819A91] p-2 font-inter rounded text-white hover:bg-blue-600">
-                NEW TASK
+                class="bg-[#819A91] p-2 font-inter rounded text-white hover:bg-[#A7C1A8]">
+                <span class="text-[EEEFE0]">
+                    NEW TASK
+                </span>
             </button>
             <AddTasksModal v-model="showModal" @submit="handleNewTask" />
         </div>
