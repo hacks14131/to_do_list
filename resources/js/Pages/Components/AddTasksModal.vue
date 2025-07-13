@@ -67,7 +67,8 @@
   </TransitionRoot>
 </template>
 <script setup>
-import { useForm } from '@inertiajs/vue3';
+import { useForm } from "@inertiajs/vue3";
+import { watch } from "vue";
 import {
   Dialog,
   DialogPanel,
@@ -76,8 +77,12 @@ import {
   TransitionRoot,
 } from "@headlessui/vue";
 
-defineProps({
+const props = defineProps({
   modelValue: Boolean,
+  task: {
+    type: Object,
+    default: null,
+  },
 });
 
 const emit = defineEmits(["update:modelValue", "submit"]);
@@ -85,12 +90,32 @@ const emit = defineEmits(["update:modelValue", "submit"]);
 const form = useForm({
   title: null,
   description: null,
-  deadline: null, 
+  deadline: null,
 });
 
+watch(
+  () => props.task,             // Watch the task prop
+  (newTask) => {                // 'newTask' is the updated value
+    if (newTask) {
+      form.title = newTask.title ?? '';
+      form.description = newTask.description ?? '';
+      form.deadline = newTask.deadlineDate?.split('T')[0] ?? '';
+    } else {
+      form.reset(); // or manually clear the fields
+    }
+  },
+  { immediate: true }
+);
+
 function submitForm() {
-  form.post('/add-new-tasks');
-  emit("update:modelValue", false);
-  form.value = { title: null, description: null, deadline: null };
+  if (props.task && props.task.id) {
+    form.patch(`/tasks/${props.task.id}`, {
+      onSuccess: () => emit("update:modelValue", false),
+    });
+  } else {
+    form.post(`/add-new-tasks`, {
+      onSuccess: () => emit("update:modelValue", false),
+    });
+  }
 }
 </script>

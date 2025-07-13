@@ -10,6 +10,26 @@ use Inertia\Inertia;
 
 class TaskController extends Controller                                                                                                                                             
 {
+    public function update(Request $request, Task $task) {
+        try {
+            $request->validate([
+                'title' => 'required|string',
+                'description' => 'required|string',
+                'deadline' => 'required|date',
+            ]);
+
+            $task->update([
+                'title' => $request->title,
+                'description' => $request->description,
+                'deadlineDate' => $request->deadline,
+            ]);
+
+            return redirect()->back()->with('success', 'Task updated successfully.');
+        } catch (\Throwable $th) {
+            Log::error("Error deleting tasks", ["error" => $th->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Failed to update task.'])->withInput();
+        }
+    }
     public function removeTask(Task $task) {
         try {
             $task->delete();
@@ -45,7 +65,6 @@ class TaskController extends Controller
     public function index(Request $request) {
         $userID = Auth::user()->id;
         $tasks = Task::where("taskOwner", $userID)->where("status", "!=", "completed")->get();
-        // dump($tasks->toArray());
         return Inertia::render('Home', [
             'tasks' => $tasks
         ]);

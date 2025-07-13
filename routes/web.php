@@ -7,11 +7,9 @@ use App\Http\Controllers\TaskController;
 Route::middleware('auth')->group(function() {
     Route::get('/', [TaskController::class, 'index'])->name('all-tasks');
     Route::post('/add-new-tasks', [TaskController::class, 'addNewTask']);
-    //update task to be prioritize
+    Route::patch('/tasks/{task}', [TaskController::class, 'update']);
     Route::patch('/task/{task}/prioritize', [TaskController::class, 'prioritizeTask'])->name('tasks.prioritize');
-    //update task to be mark as done
     Route::patch('/tasks/{task}/complete', [TaskController::class, 'markAsDone'])->name('tasks.complete');
-    //delete task
     Route::delete('/tasks/{task}', [TaskController::class, 'removeTask'])->name('tasks.destroy');
 
     Route::inertia('/priority', 'Priority')->name('prioritized-tasks');
