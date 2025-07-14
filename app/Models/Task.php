@@ -15,4 +15,7 @@ class Task extends Model
         'dateCompleted',
         'priority',
     ];
+    public function scopePriority($query) {
+        return $query->where('priority', true);
+    }
 }

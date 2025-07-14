@@ -12,7 +12,7 @@ Route::middleware('auth')->group(function() {
     Route::patch('/tasks/{task}/complete', [TaskController::class, 'markAsDone'])->name('tasks.complete');
     Route::delete('/tasks/{task}', [TaskController::class, 'removeTask'])->name('tasks.destroy');
 
-    Route::inertia('/priority', 'Priority')->name('prioritized-tasks');
+    Route::get('/priority', [TaskController::class, 'renderPrioTask'])->name('prioritized-tasks');
     Route::inertia('/completed', 'Completed')->name('completed-tasks');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');

@@ -69,6 +69,21 @@ class TaskController extends Controller
             'tasks' => $tasks
         ]);
     }
+    public function renderPrioTask(Request $request) {
+        try {
+            $tasks = Task::priority()
+                ->where("taskOwner", Auth::id())
+                ->where("status", "!=", "completed")
+                ->orderBy('updated_at', 'desc')
+                ->get();
+            return Inertia::render('Priority', [
+                'tasks' => $tasks
+            ]);
+        } catch (\Throwable $th) {
+            Log::error("An error occured while opening priority task", ["error" => $th->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'An error occured while opening priority task.'])->withInput();
+        }
+    }
     public function addNewTask(Request $request) {
         try {
             $fields = $request->validate([
