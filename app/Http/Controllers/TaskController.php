@@ -40,9 +40,22 @@ class TaskController extends Controller
             return redirect()->back()->withErrors(['error' => 'Failed to delete task.'])->withInput();
         }
     }
+    public function reopenTask(Task $task) {
+        try {
+            $task->status = 'Pending';
+            $task->dateCompleted = null;
+            $task->save();
+
+            return redirect()->back()->with('success', 'Task has been reopened successfully.');
+        } catch (\Throwable $th) {
+            Log::error("Error in reopening task", ["error" => $th->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'Failed to reopen task.'])->withInput();
+        }
+    }
     public function markAsDone(Task $task) {
         try {
             $task->status = 'Completed';
+            $task->dateCompleted = today();
             $task->save();
 
             return redirect()->back()->with('success', 'Task marked as done successfully.');
@@ -64,7 +77,7 @@ class TaskController extends Controller
     }
     public function index(Request $request) {
         $userID = Auth::user()->id;
-        $tasks = Task::where("taskOwner", $userID)->where("status", "!=", "completed")->get();
+        $tasks = Task::where("taskOwner", $userID)->where("status", "!=", "completed")->orderBy('created_at', 'desc')->get();
         return Inertia::render('Home', [
             'tasks' => $tasks
         ]);
@@ -82,6 +95,20 @@ class TaskController extends Controller
         } catch (\Throwable $th) {
             Log::error("An error occured while opening priority task", ["error" => $th->getMessage()]);
             return redirect()->back()->withErrors(['error' => 'An error occured while opening priority task.'])->withInput();
+        }
+    }
+    public function renderCompletedTask(Request $request) {
+        try {
+            $tasks = Task::where('status', 'Completed')
+             ->orderBy('updated_at', 'desc')
+             ->get();
+
+            return Inertia::render('Completed', [
+                'tasks' => $tasks
+            ]);
+        } catch (\Throwable $th) {
+            Log::error("An error occured while opening completed task", ["error" => $th->getMessage()]);
+            return redirect()->back()->withErrors(['error' => 'An error occured while opening completed task.'])->withInput();
         }
     }
     public function addNewTask(Request $request) {

@@ -14,11 +14,21 @@
                 <strong>Deadline:</strong>
                 {{ formatDate(task.deadlineDate) }}
             </p>
-            <p><strong>Created:</strong> {{ formatDate(task.created_at) }}</p>
+            <p v-if="props.source != 'completed-component'">
+                <strong>Created:</strong>
+                {{ formatDate(task.created_at) }}
+            </p>
+            <p v-if="props.source == 'completed-component'">
+                <strong>Date Completed:</strong>
+                {{ formatDate(task.dateCompleted) }}
+            </p>
         </div>
         <div class="flex justify-center space-x-2 mb-4 m-2 p-1">
             <button
-                v-if="props.source !== 'priority-component'"
+                v-if="
+                    props.source !== 'priority-component' &&
+                    props.source !== 'completed-component'
+                "
                 class="text-xs bg-orange-400 hover:bg-orange-500 text-white w-24 h-7 rounded transition-colors duration-200"
                 @click="$emit('prioritize', props.task)"
             >
@@ -26,6 +36,7 @@
             </button>
 
             <button
+                v-if="props.source !== 'completed-component'"
                 class="text-xs bg-blue-400 hover:bg-blue-500 text-white w-24 h-7 rounded transition-colors duration-200"
                 @click="$emit('edit', task)"
             >
@@ -33,13 +44,23 @@
             </button>
 
             <button
-                class="text-xs bg-green-400 hover:bg-green-500 text-white w-24 h-7 rounded transition-colors duration-200"
+                :class="[
+                    'text-xs text-white w-24 h-7 rounded transition-colors duration-200',
+                    props.source === 'completed-component'
+                        ? 'bg-yellow-500 hover:bg-yellow-600'
+                        : 'bg-green-400 hover:bg-green-500',
+                ]"
                 @click="$emit('done', task)"
             >
-                ✔ Done
+                {{
+                    props.source === "completed-component"
+                        ? "↺ Reopen"
+                        : "✔ Done"
+                }}
             </button>
 
             <button
+                v-if="props.source !== 'completed-component'"
                 class="text-xs bg-red-400 hover:bg-red-500 text-white w-24 h-7 rounded transition-colors duration-200"
                 @click="$emit('delete', task)"
             >
